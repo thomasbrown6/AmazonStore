@@ -4,9 +4,10 @@ var mysql = require("mysql");
 // Require inquirer
 var inquirer = require("inquirer");
 
-// Require cli-table, using this to display the products in the console
-var Table = require("cli-table");
+// Require cli-table, use this to display products
+// var Table = require("cli-table");
 
+// Connect to MySQL database
 var connection = mysql.createConnection({
     host: "localhost",
 
@@ -25,7 +26,7 @@ var connection = mysql.createConnection({
 // Connect to database
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected");
+    //console.log("connected");
     displayStore();
 });
 
@@ -36,6 +37,54 @@ function displayStore() {
 
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
+        
+        // var idArray = [];
+        // var productArray = [];
+        // var departmentArray = [];
+        // var priceArray = [];
+        // var quantityArray = [];
+            
+        // // Put id's in array
+        // for (var i = 0; i < res.length; i++) {
+        //     idArray.push(res[i].item_id);
+        // }
+
+        // // Put product names in array
+        // for (var i = 0; i < res.length; i++) {
+        //     productArray.push(res[i].product_name);
+        // }
+
+        // // Put department in array
+        // for (var i = 0; i < res.length; i++) {
+        //     departmentArray.push(res[i].department_name);
+        // }
+
+        // // Put price in array
+        // for (var i = 0; i < res.length; i++) {
+        //     priceArray.push(res[i].price);
+        // }
+
+        // // Put stock quantity in array
+        // for (var i = 0; i < res.length; i++) {
+        //     quantityArray.push(res[i].stock_quantity);
+        // }
+
+        
+
+        // // Display products
+        // var productObject;
+        // var table = new Table({ head: ["", "Product Name", "Department", "Price", "Quantity"] });
+ 
+        // for (var i = 0; i < res.length; i++) {
+
+        //     table.push(res[i]);
+
+        // }
+
+        // console.log(table.toString());
+
+        // console.log(res[0]);
+
 
         // Display products
         for (var i = 0; i < res.length; i++) {
@@ -50,7 +99,6 @@ function displayStore() {
             );
         }
         buyProduct();
-        connection.end();
     });
 };
 
@@ -116,7 +164,7 @@ function buyProduct() {
             else {
                 // If there's not enough of the product in the inventory
                 console.log("Insufficient quantity!");
-                connection.end();
+                displayStore();
             }
         });
     });
