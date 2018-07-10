@@ -33,72 +33,50 @@ connection.connect(function (err) {
 
 // Function to display the items in the store
 function displayStore() {
-    console.log("Which item would you like to purchase?");
+    // Ask user would they like to see the inventory
+    inquirer.prompt({
+        name: "answer",
+        type: "confirm",
+        message: "Would you like to view the inventory?"
+    }).then(function (user) {
+        if (user.answer) {
 
-    connection.query("SELECT * FROM products", function (err, res) {
-        if (err) throw err;
-        
-        // var idArray = [];
-        // var productArray = [];
-        // var departmentArray = [];
-        // var priceArray = [];
-        // var quantityArray = [];
-            
-        // // Put id's in array
-        // for (var i = 0; i < res.length; i++) {
-        //     idArray.push(res[i].item_id);
-        // }
+            console.log("Which item would you like to purchase?");
 
-        // // Put product names in array
-        // for (var i = 0; i < res.length; i++) {
-        //     productArray.push(res[i].product_name);
-        // }
+            connection.query("SELECT * FROM products", function (err, res) {
+                if (err) throw err;
 
-        // // Put department in array
-        // for (var i = 0; i < res.length; i++) {
-        //     departmentArray.push(res[i].department_name);
-        // }
-
-        // // Put price in array
-        // for (var i = 0; i < res.length; i++) {
-        //     priceArray.push(res[i].price);
-        // }
-
-        // // Put stock quantity in array
-        // for (var i = 0; i < res.length; i++) {
-        //     quantityArray.push(res[i].stock_quantity);
-        // }
-
-        
-
-        // // Display products
-        // var productObject;
-        // var table = new Table({ head: ["", "Product Name", "Department", "Price", "Quantity"] });
- 
-        // for (var i = 0; i < res.length; i++) {
-
-        //     table.push(res[i]);
-
-        // }
-
-        // console.log(table.toString());
-
-        // console.log(res[0]);
-
-
-        // Display products
-        for (var i = 0; i < res.length; i++) {
-            console.log(
-                "========================================\n"
-                + "Id: " + res[i].item_id + "\n"
-                + "Product: " + res[i].product_name + "\n"
-                + "Department: " + res[i].department_name + "\n"
-                + "Price: $" + res[i].price + "\n"
-                + "Quantity: " + res[i].stock_quantity + "\n"
-                + "========================================\n"
-            );
+                // Display products
+                for (var i = 0; i < res.length; i++) {
+                    console.log(
+                        "========================================\n"
+                        + "Id: " + res[i].item_id + "\n"
+                        + "Product: " + res[i].product_name + "\n"
+                        + "Department: " + res[i].department_name + "\n"
+                        + "Price: $" + res[i].price + "\n"
+                        + "Quantity: " + res[i].stock_quantity + "\n"
+                        + "========================================\n"
+                    );
+                }
+                buyProduct();
+            });
         }
-        buyProduct();
+        else {
+            // Ask user would they like to buy a product from the inventory
+            inquirer.prompt({
+                name: "answer",
+                type: "confirm",
+                message: "Would you like purchase a product?"
+            }).then(function (user) {
+                if (user.answer) {
+                    buyProduct();
+                }
+                else {
+                    connection.end();
+                }
+            });
+
+        }
     });
 };
 

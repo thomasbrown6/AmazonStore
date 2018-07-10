@@ -14,3 +14,4 @@ Amazon-like application that takes in orders from customers/manager and interact
     * Purchase products in the inventory
     * The customer can only purchase items that are available
 
+# link to video: https://drive.google.com/file/d/1foIOQ85A27_ZlwRdlij2CCn9xycM6IcX/view

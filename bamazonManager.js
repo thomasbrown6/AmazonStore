@@ -141,9 +141,6 @@ function addInventory() {
                 for (var i = 0; i < res.length; i++) {
                     // If item in table matched the user choice id, then run update
                     if (res[i].item_id === parseInt(answer.id)) {
-                        console.log(res[i].item_id);
-                        console.log(parseInt(answer.id));
-                        console.log(parseInt(answer.units));
 
                         // Update database with new quantity
                         connection.query("UPDATE products SET ? WHERE ?",
